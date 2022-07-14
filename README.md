@@ -1,4 +1,4 @@
-# BEFORE USE
+# control-m agent
 
 Modify ctmagent.yaml
 
