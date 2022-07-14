@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controlm-agent-deployment
+  labels:
+    app: controlm-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controlm-agent
+  template:
+    metadata:
+      labels:
+        app: controlm-agent
+    spec:
+      containers:
+      - name: controlm-agent
+        image: <image>
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "echo"
+                - "<ip>"
+                - "<domain>"
+                - ">>"
+                - "/etc/hosts"
+        env:
+        - name: CTM_SERVER
+          value: "<CTM_HOST>"
+        - name: CTM_HOSTGROUP
+          value: "<CTM_HOST_GROUP>"
+        - name: CTM_AGENT_PORT
+          value: "7006"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctmagent-port
+  labels:
+    app: controlm-agent
+spec:
+  type: NodePort
+  ports:
+  - port: 7006
+  selector:
+    app: controlm-agent
