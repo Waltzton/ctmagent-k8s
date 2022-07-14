@@ -1,6 +1,4 @@
-# ctmagent-k8s
-
-BEFORE USE
+# BEFORE USE
 
 Modify ctmagent.yaml
 
